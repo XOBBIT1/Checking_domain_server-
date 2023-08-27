@@ -8,6 +8,14 @@ django = "*"
 pre-commit = "*"
 flake8 = "*"
 autoflake = "*"
+python-dotenv = "*"
+drf-spectacular = "*"
+django-rest-swagger = "*"
+psycopg2 = "*"
+django-celery-beat = "*"
+django-debug-toolbar = "*"
+django-cors-headers = "*"
+django-filter = "*"
 
 [dev-packages]
 
