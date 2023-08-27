@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
+    "domain",
     "drf_spectacular",
     "django_celery_beat",
     "debug_toolbar",
