@@ -1,4 +1,4 @@
-<h1>FastAPI and Docker Compose Readme</h1>
+<h1>Django Project and Docker Compose Readme</h1>
 
 <p>
     This readme file provides instructions on how to launch the Django project using Docker Compose. It also lists the 
