@@ -1,7 +1,7 @@
 from rest_framework import views, status, generics, mixins
 from rest_framework.response import Response
 
-from ..serializers.domain import DomainSerializer
+from ..serializers.domain import DomainSerializer, DomainPingSerializer
 from ...models import Domain
 
 
@@ -10,6 +10,13 @@ class DomainGetAllViews(views.APIView):
     def get(self, request):
         domains = Domain.objects.all()
         serializer = DomainSerializer(domains, many=True)
+        return Response(serializer.data)
+
+
+class DomainGetPingViews(views.APIView):
+    def get(self, request):
+        domains = Domain.objects.all()
+        serializer = DomainPingSerializer(domains, many=True)  # Передаем список объектов Domain
         return Response(serializer.data)
 
 
