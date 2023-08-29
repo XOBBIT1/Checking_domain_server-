@@ -1,7 +1,9 @@
+from datetime import datetime
+
 from rest_framework import views, status, generics, mixins
 from rest_framework.response import Response
 
-from ..serializers.domain import DomainSerializer, DomainPingSerializer
+from ..serializers.domain import DomainSerializer
 from ...models import Domain
 
 
@@ -13,11 +15,20 @@ class DomainGetAllViews(views.APIView):
         return Response(serializer.data)
 
 
-class DomainGetPingViews(views.APIView):
+class ChartView(views.APIView):
     def get(self, request):
         domains = Domain.objects.all()
-        serializer = DomainPingSerializer(domains, many=True)  # Передаем список объектов Domain
-        return Response(serializer.data)
+        chart_data = []
+
+        for domain in domains:
+            chart_data.append({
+                "domain_name": domain.domain_name,
+                "ping_of_domain": [
+                    {"hour": datetime.now().hour, "ping": int(domain.ping_of_domain)}
+                ]
+            })
+
+        return Response(chart_data)
 
 
 class DomainRetrieveView(generics.RetrieveAPIView):

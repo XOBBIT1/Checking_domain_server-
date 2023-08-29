@@ -16,5 +16,6 @@ class DomainPingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Domain
         fields = [
+            "domain_name",
             "ping_of_domain",
         ]
