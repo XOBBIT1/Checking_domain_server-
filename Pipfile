@@ -16,6 +16,9 @@ django-celery-beat = "*"
 django-debug-toolbar = "*"
 django-cors-headers = "*"
 django-filter = "*"
+celery = "*"
+redis = "*"
+gevent = "*"
 
 [dev-packages]
 

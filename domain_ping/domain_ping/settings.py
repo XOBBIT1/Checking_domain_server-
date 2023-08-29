@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     "drf_spectacular",
     "django_celery_beat",
     "debug_toolbar",
+    "corsheaders",
 ]
 
 CORS_ALLOWED_ORIGINS = ["http://localhost:3000"]
@@ -78,7 +79,7 @@ DATABASES = {
         "NAME": os.environ["POSTGRES_NAME"],
         "USER": os.environ["POSTGRES_USER"],
         "PASSWORD": os.environ["POSTGRES_PASSWORD"],
-        "HOST": "localhost",
+        "HOST": "postgres",
         "PORT": os.environ["POSTGRES_PORT"],
     }
 }
@@ -121,7 +122,7 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 
-# STATICFILES_DIRS = [os.path.join(BASE_DIR, "front/my-app/build/static")]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "front/my-react-app/build/static")]
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = "/media/"
@@ -143,7 +144,7 @@ REST_FRAMEWORK = {
     ],
 }
 
-PING_TIME = "2"
+PING_TIME = "1"
 
 REDIS_HOST = "127.0.0.1"
 REDIS_PORT = os.environ["REDIS_PORT"]

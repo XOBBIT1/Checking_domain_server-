@@ -2,7 +2,14 @@ version: "3.9"
 
 services:
 
-  db:
+  redis:
+    image: redis:latest
+    container_name: redis
+    restart: always
+    ports:
+      - '6379:6379'
+
+  postgres:
     image: postgres:12
     volumes:
       - postgres_data:/var/lib/postgresql/data
@@ -25,42 +32,42 @@ services:
     env_file:
       - .env
     depends_on:
-      - db
+      - postgres
 
-#  frontend:
-#    container_name: frontend
-#    build:
-#      context: ""
-#      dockerfile: front/Dockerfile
-#    ports:
-#      - '3000:3000'
+  frontend:
+    container_name: frontend
+    build:
+      context: ""
+      dockerfile: domain_ping/front/Dockerfile
+    ports:
+      - '3000:3000'
 
-#  worker:
-#    restart: always
-#    build: .
-#    command: ['celery', '-A', 'config', 'worker', '-l', 'info', '-P', 'gevent']
-#    volumes:
-#      - .:/esn
-#    env_file:
-#      - .env
-#    depends_on:
-#      - redis
-#      - db
-#      - backend
-#
-#  celery_beat:
-#    restart: always
-#    build: .
-#    command: [ 'celery', '-A', 'config', 'beat', '-l', 'info', "--scheduler", "django_celery_beat.schedulers:DatabaseScheduler"]
-#    volumes:
-#      - .:/esn
-#    env_file:
-#      - .env
-#    depends_on:
-#      - redis
-#      - db
-#      - backend
-#      - worker
+  worker:
+    restart: always
+    build: .
+    command: ['celery', '-A', 'domain_ping.domain_ping.', 'worker', '-l', 'info', '-P', 'gevent']
+    volumes:
+      - .:/domain_ping
+    env_file:
+      - .env
+    depends_on:
+      - redis
+      - postgres
+      - backend
+
+  celery_beat:
+    restart: always
+    build: .
+    command: [ 'celery', '-A', 'domain_ping ', 'beat', '-l', 'info', "--scheduler", "django_celery_beat.schedulers:DatabaseScheduler"]
+    volumes:
+      - .:/domain_ping
+    env_file:
+      - .env
+    depends_on:
+      - redis
+      - postgres
+      - backend
+      - worker
 
 volumes:
   postgres_data:
